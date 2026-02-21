@@ -25,6 +25,10 @@ def add_func(x: int | float, y: int | float) -> int | float:
     return x + y
 
 
+def multiply(a: int | float, b: int | float) -> int | float:
+    return a * b
+
+
 def show_data(df: pd.DataFrame) -> None:
     print(df)
 
@@ -35,7 +39,7 @@ def main() -> int:
 
     if passwd is None:
         logger.error("PASSWORD environment variable not set")
-        raise EnvironmentError("PASSWORD environment variable not set")
+        raise OSError("PASSWORD environment variable not set")
     else:
         logger.info("Password loaded")
 
