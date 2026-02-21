@@ -1,3 +1,4 @@
+## Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -216,6 +217,7 @@ __marimo__/
 .streamlit/secrets.toml
 
 
+## macOS gitignore
 # General
 .DS_Store
 __MACOSX/
@@ -244,6 +246,9 @@ Temporary Items
 .apdisk
 
 
+## Basic Windows.gitignore
+# Windows image file caches
+ehthumbs_vista.db
 # Windows thumbnail cache files
 Thumbs.db
 ehthumbs.db
