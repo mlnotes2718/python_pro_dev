@@ -74,3 +74,53 @@ When you are ready to swap `print()` for `logging`, simply:
 1.  Remove `--ignore=T201` from your VS Code settings.
 2.  All `print` statements will reappear in your **Problems Tab**.
 3.  Address them one by one or delete them.
+
+
+
+
+## How to Manage Print Statements
+
+If you want to keep using `print` in your Data Engineering/ML scripts without Ruff nagging you, you have a few options:
+
+### 1. Global Ignore in `pyproject.toml`
+
+Add it to your ignore list so Ruff never mentions it.
+
+```toml
+[tool.ruff.lint]
+ignore = ["T201"]
+
+```
+
+### 2. File-Specific Ignore
+
+It’s common to ban prints in your "core" library but allow them in your "scripts" or "notebooks."
+
+```toml
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["T201"]
+"tests/*" = ["T201"]
+
+```
+
+### 3. The "Fail-Safe" Inline Ignore
+
+If you have one specific print you need to keep (like a CLI progress message), just use the `# noqa` comment:
+
+```python
+print("Processing data...")  # noqa: T201
+
+```
+
+---
+
+## Summary of Relevant "T" Rules
+
+If you are doing professional DE work, you might want to look at the whole `T20` category:
+
+| Rule Code | Name | Description |
+| --- | --- | --- |
+| **`T201`** | `print` | Detects `print` statements. |
+| **`T203`** | `pprint` | Detects `pprint` (pretty print) statements. |
+
+[Ruff Linting Rules and Configuration](https://www.youtube.com/watch?v=828S-DMQog8)
