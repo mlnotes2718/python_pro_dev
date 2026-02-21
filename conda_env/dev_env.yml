@@ -1,0 +1,16 @@
+name: dev-ruff
+channels:
+  - defaults
+dependencies:
+  - ruff
+  - mypy
+  - python=3.11
+  - pandas
+  - pandas-stubs
+  - pytest
+  - python-dotenv
+  - requests
+  - types-requests
+  - pyyaml
+  - types-pyyaml
+prefix: /Users/dsai/miniconda3/envs/dev-ruff
