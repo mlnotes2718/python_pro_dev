@@ -15,7 +15,7 @@ setup:
         uv run pre-commit install; \
     else \
         conda env create -f ./conda_env/dev_env.yml; \
-        pre-commit install; \
+        pre-commit install --hook-type pre-commit --hook-type pre-push; \
     fi
 
 # # Run Type Checking
