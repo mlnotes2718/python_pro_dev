@@ -1,4 +1,4 @@
-name: dev-ruff
+name: dev-pypro
 channels:
   - defaults
 dependencies:
@@ -16,4 +16,4 @@ dependencies:
   - just
   - pre-commit
   - pytest-cov
-prefix: /Users/dsai/miniconda3/envs/dev-ruff
+prefix: /Users/dsai/miniconda3/envs/dev-pypro
