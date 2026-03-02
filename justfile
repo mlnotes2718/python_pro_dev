@@ -53,3 +53,14 @@ typecheck:
 
 # Run all checks
 all: lint typecheck test 
+
+# Remove build, cache, and coverage artifacts
+clean:
+    @echo "🧹 Cleaning up project..."
+    rm -rf .pytest_cache
+    rm -rf .coverage
+    rm -rf htmlcov
+    rm -rf .mypy_cache
+    rm -rf .ruff_cache
+    find . -type d -name "__pycache__" -exec rm -rf {} +
+    @echo "✨ Cleaned!"
