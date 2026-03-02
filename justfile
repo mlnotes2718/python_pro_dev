@@ -29,7 +29,7 @@ setup:
 #     @if [ "{{env_type}}" = "uv" ]; then uv run ruff check . --fix; else ruff check . --fix; fi
 
 # Run Tests
-test args="--cov=src --cov-report=term-missing":
+test *args:
     @echo "🧪 ({{env_type}}) Running Pytest..."
     @if [ "{{env_type}}" = "uv" ]; then uv run pytest {{args}}; else pytest {{args}}; fi
 
