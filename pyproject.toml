@@ -14,6 +14,7 @@ dependencies = [
 dev = [
     "mypy>=1.19.1",
     "pandas-stubs>=3.0.0.260204",
+    "pre-commit>=4.5.1",
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
     "ruff>=0.15.2",
@@ -42,9 +43,10 @@ warn_unused_configs = true
 # Essential for Conda: ignore libs without stubs so mypy doesn't crash on niche ML libs
 ignore_missing_imports = true 
 
+# Don't enforce strict typing in tests
 [[tool.mypy.overrides]]
 module = "tests.*"
-disallow_untyped_defs = false # Relax for tests to stay productive
+disallow_untyped_defs = false
 
 # --- PYTEST CONFIGURATION ---
 [tool.pytest.ini_options]
