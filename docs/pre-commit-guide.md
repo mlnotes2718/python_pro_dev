@@ -265,6 +265,58 @@ setup:
 make setup
 ```
 
+
+---
+
+## Hook Stages
+
+By default all hooks run on `git commit`. You can control **when** each hook runs using `stages`.
+
+```yaml
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.10
+    hooks:
+      - id: ruff
+        args: [--fix]
+        stages: [pre-commit]      # fast checks on commit
+      - id: ruff-format
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: uv run mypy src
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]      # fast checks on commit
+
+      - id: pytest
+        name: pytest
+        entry: uv run pytest --cov --cov-report=term-missing
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]        # slow checks on push only
+```
+
+Install both hook types:
+
+```bash
+uv run pre-commit install                        # pre-commit hooks
+uv run pre-commit install --hook-type pre-push   # pre-push hooks
+```
+
+Result:
+```
+git commit  → ruff, ruff-format, mypy   (fast)
+git push    → pytest                    (thorough)
+```
+
+> **Rule of thumb:** fast checks on commit, slow checks on push.
+
 ---
 
 ## Summary
