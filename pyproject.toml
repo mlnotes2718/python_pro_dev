@@ -49,4 +49,5 @@ disallow_untyped_defs = false # Relax for tests to stay productive
 # --- PYTEST CONFIGURATION ---
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = "src"
 addopts = "--strict-markers --cov=src --cov-report=term-missing"
