@@ -1,13 +1,16 @@
 # .pre-commit-config.yaml
 repos:
+  # Ruff - remote is fine, auto-discovers pyproject.toml
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.9.10
     hooks:
-      - id: ruff              # lint
+      - id: ruff
         args: [--fix]
-      - id: ruff-format       # format
+        stages: [pre-commit]
+      - id: ruff-format
+        stages: [pre-commit]
 
- # Mypy - static type checking
+  # mypy and pytest as local - need your venv
   - repo: local
     hooks:
       - id: mypy
@@ -15,13 +18,13 @@ repos:
         entry: uv run mypy src
         language: system
         types: [python]
-        pass_filenames: false  # let mypy use your pyproject.toml config
+        pass_filenames: false
+        stages: [pre-commit]
 
-  - repo: local
-    hooks:
       - id: pytest
         name: pytest
         entry: uv run pytest --cov --cov-report=term-missing
         language: system
         pass_filenames: false
         always_run: true
+        stages: [pre-push]    # ← only on push
