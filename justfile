@@ -12,8 +12,10 @@ setup:
     @echo "🚀 Using {{env_type}} environment..."
     @if [ "{{env_type}}" = "uv" ]; then \
         uv sync; \
+        uv run pre-commit install; \
     else \
         conda env create -f environment.yml; \
+        pre-commit install; \
     fi
 
 # # Run Type Checking
@@ -48,3 +50,6 @@ typecheck:
     else \
         mypy src; \
     fi    
+
+# Run all checks
+all: lint typecheck test

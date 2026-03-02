@@ -36,8 +36,8 @@ def show_data(df: pd.DataFrame) -> None:
 
 def main() -> int:
     env_path = Path(__file__).parent.parent / ".env"
-    logger.info(f"Looking for .env at: {env_path}")  # add this
-    logger.info(f"File exists: {env_path.exists()}")  # add this
+    # logger.info(f"Looking for .env at: {env_path}")  # add this
+    # logger.info(f"File exists: {env_path.exists()}")  # add this
     load_dotenv(env_path, override=True)
     passwd = os.getenv("PASSWORD")
 
