@@ -244,3 +244,4 @@ def process_workflow(url: str, storage: Storage) -> None:
 Notice that `fetch_payload` doesn't know about `FileStorage`. It just does one thing and returns a value. This makes it a "Lego brick" you can reuse anywhere.
 
 **Would you like me to generate a `pytest` file for this "After" example so you can see how professionals write test suites?**
+
