@@ -1,4 +1,13 @@
 {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.ruff": true
+    },
+
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    
     "python.testing.pytestArgs": [
         "tests"
     ],
