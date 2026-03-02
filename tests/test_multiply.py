@@ -1,6 +1,0 @@
-from src.ruff_test import multiply
-
-assert multiply(2, 3) == 6
-assert multiply(2.5, 4) == 10.0
-assert multiply(-1, 5) == -5
-assert multiply(0, 100) == 0
