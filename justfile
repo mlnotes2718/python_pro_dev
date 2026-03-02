@@ -14,7 +14,7 @@ setup:
         uv sync; \
         uv run pre-commit install; \
     else \
-        conda env create -f environment.yml; \
+        conda env create -f ./conda_env/dev_env.yml; \
         pre-commit install; \
     fi
 
@@ -29,7 +29,7 @@ setup:
 #     @if [ "{{env_type}}" = "uv" ]; then uv run ruff check . --fix; else ruff check . --fix; fi
 
 # Run Tests
-test *args:
+test args="--cov=src --cov-report=term-missing":
     @echo "🧪 ({{env_type}}) Running Pytest..."
     @if [ "{{env_type}}" = "uv" ]; then uv run pytest {{args}}; else pytest {{args}}; fi
 
@@ -52,4 +52,4 @@ typecheck:
     fi    
 
 # Run all checks
-all: lint typecheck test
+all: lint typecheck test 
