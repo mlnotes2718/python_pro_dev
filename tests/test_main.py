@@ -31,7 +31,13 @@ def test_main_success() -> None:
 
 
 def test_main_no_password() -> None:
-    with patch("main.load_dotenv"):  # prevent dotenv from overwriting
+    with patch("main.load_dotenv"):
         with patch.dict("os.environ", {}, clear=True):
-            with pytest.raises(OSError, match="PASSWORD environment variable not set"):
-                main()
+            with patch("main.logger") as mock_logger:
+                with pytest.raises(
+                    OSError, match="PASSWORD environment variable not set"
+                ):
+                    main()
+                    mock_logger.error.assert_called_with(
+                        "[TEST] PASSWORD environment variable not set"
+                    )
