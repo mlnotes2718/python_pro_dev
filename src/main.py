@@ -1,5 +1,6 @@
 import logging
 import os
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -14,7 +15,7 @@ formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(name)s | %(messag
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(formatter)
 
-file_handler = logging.FileHandler("./log/app.log")
+file_handler = logging.FileHandler(Path(__file__).parent.parent / "log" / "app.log")
 file_handler.setFormatter(formatter)
 
 logger.addHandler(console_handler)
@@ -34,7 +35,7 @@ def show_data(df: pd.DataFrame) -> None:
 
 
 def main() -> int:
-    load_dotenv()
+    load_dotenv(Path(__file__).parent.parent / ".env")
     passwd = os.getenv("PASSWORD")
 
     if passwd is None:
