@@ -52,7 +52,7 @@ typecheck:
     fi    
 
 # Run all checks
-all: lint typecheck test 
+run: lint typecheck test 
 
 # Remove build, cache, and coverage artifacts
 clean:

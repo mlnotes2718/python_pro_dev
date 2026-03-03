@@ -1,13 +1,13 @@
 {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.ruff": true
-    },
-
+    // Python Integration: Ruff as the primary tool
     "[python]": {
-        "editor.defaultFormatter": "charliermarsh.ruff"
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": false, // Prevents code jumping while typing
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "never",
+            "source.organizeImports.ruff": "never"
+        }
     },
-    
     "python.testing.pytestArgs": [
         "tests"
     ],

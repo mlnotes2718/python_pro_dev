@@ -24,6 +24,9 @@ curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -
 # Add ~/bin to PATH (add to ~/.zshrc or ~/.bashrc)
 export PATH="$HOME/bin:$PATH"
 
+# Permanently add path to zshrc
+echo 'export PATH="$HOME/bin:$PATH"' >> ~/.zshrc
+
 # Reload shell
 source ~/.zshrc
 

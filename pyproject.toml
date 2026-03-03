@@ -5,7 +5,6 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "just>=0.8.165",
     "pandas>=3.0.1",
     "python-dotenv>=1.2.2",
     "requests>=2.32.5",
@@ -38,7 +37,7 @@ indent-style = "space"
 # --- MYPY CONFIGURATION ---
 [tool.mypy]
 python_version = "3.11"
-strict = true
+strict = true # This turns on almost everything, including disallow_untyped_defs
 show_error_codes = true
 warn_unused_configs = true
 # Essential for Conda: ignore libs without stubs so mypy doesn't crash on niche ML libs
@@ -47,7 +46,8 @@ ignore_missing_imports = true
 # Don't enforce strict typing in tests
 [[tool.mypy.overrides]]
 module = "tests.*"
-disallow_untyped_defs = false
+disallow_untyped_defs = false  # <--- Change this to false
+check_untyped_defs = false     # <--- Also recommended for tests
 
 # --- PYTEST CONFIGURATION ---
 [tool.pytest.ini_options]
