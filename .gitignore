@@ -272,4 +272,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-.gitleaks_report.csv
+gitleaks_report.csv
