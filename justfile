@@ -51,8 +51,18 @@ typecheck:
         mypy src; \
     fi    
 
+# Run Security Scan on src directory only
+sec:
+    @echo "🔒  ({{env_type}}) Running Bandit on src/..."
+    @if [ "{{env_type}}" = "uv" ]; then \
+        uv run bandit -r . -ll -c pyproject.toml; \
+    else \
+        bandit -r . -ll -c pyproject.toml; \
+    fi
+
+
 # Run all checks
-run: lint typecheck test 
+run: lint typecheck sec test clean
 
 # Remove build, cache, and coverage artifacts
 clean:
