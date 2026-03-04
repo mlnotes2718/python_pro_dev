@@ -10,6 +10,13 @@ repos:
       - id: ruff-format
         stages: [pre-commit]
 
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks
+        args: ["--redact", "--report-format=csv", "--report-path=gitleaks_report.csv"]
+        stages: [pre-commit, pre-push]
+
   # mypy and pytest as local - need your venv
   - repo: local
     hooks:

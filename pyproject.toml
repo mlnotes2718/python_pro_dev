@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "bandit>=1.9.4",
     "pandas>=3.0.1",
     "python-dotenv>=1.2.2",
     "requests>=2.32.5",
@@ -12,6 +13,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "bandit>=1.9.4",
     "mypy>=1.19.1",
     "pandas-stubs>=3.0.0.260204",
     "pre-commit>=4.5.1",
@@ -26,9 +28,34 @@ line-length = 88
 target-version = "py311"
 
 [tool.ruff.lint]
-# E: pycodestyle, F: Pyflakes, I: isort, B: flake8-bugbear, UP: pyupgrade, N: pep8-naming
-select = ["E", "F", "I", "B", "UP", "N"]
-ignore = ["T201"]
+# Core correctness & quality
+select = [
+  "E",    # pycodestyle (errors)
+  "F",    # pyflakes
+  "I",    # isort
+  "B",    # flake8-bugbear
+  "UP",   # pyupgrade
+  "N",    # pep8-naming
+
+  # Security (Bandit subset)
+  "S",    # flake8-bandit rules
+
+  # Maintainability (optional but valuable)
+  "SIM",  # flake8-simplify
+  "C4",   # flake8-comprehensions
+]
+
+# Intentional ignores
+ignore = [
+  "E501",   # handled by formatter
+  "S101",   # allow assert (tests & invariants)
+  "S311",   # allow random (not cryptographic by default)
+  "T201",   # allow print (you already had this)
+]
+
+# Optional: per-file ignores (very useful)
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]  # asserts are fine in tests
 
 [tool.ruff.format]
 quote-style = "double"
