@@ -48,7 +48,7 @@ repos:
     rev: v8.30.0
     hooks:
       - id: gitleaks
-        args: ["--redact", "--report-format=csv", "--report-path=gitleaks_report.csv"]
+        args: ["--redact", "--report-format=csv", "--report-path=./log/gitleaks_report.csv"]
         stages: [pre-commit, pre-push]
 
   # mypy and pytest as local - need your venv
