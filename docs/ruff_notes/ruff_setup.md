@@ -15,7 +15,7 @@ Paste this into your `settings.json` (`Ctrl+Shift+P` > **Open User Settings (JSO
 ```json
 {
     "workbench.colorTheme": "Default Light Modern",
-    
+
     // Auto Save: Work safely without manual saving
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1000,
@@ -34,10 +34,10 @@ Paste this into your `settings.json` (`Ctrl+Shift+P` > **Open User Settings (JSO
     "ruff.lineLength": 88,
     "ruff.lint.select": ["E", "F", "I"],
     "ruff.lint.ignore": ["T201"], // Allows print() statements
-    
+
     // Visual Aids
     "editor.rulers": [88],
-    "editor.renderWhitespace": "selection" 
+    "editor.renderWhitespace": "selection"
 }
 
 ```

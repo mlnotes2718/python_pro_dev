@@ -14,7 +14,7 @@ In the programming side:
 - Look deeper into `try-except`
 - Do not over-engineer or under-engineer class and function.
 - Do not over-use and under-use lambda and list comprehension
-- Use functional principal when writing function 
+- Use functional principal when writing function
 
 
 ## LLM Suggestion
@@ -78,10 +78,10 @@ import pandas as pd
 
 def add_tax(df: pd.DataFrame) -> None:
     # This modifies the original data outside the function!
-    df["total"] = df["price"] * 1.15 
+    df["total"] = df["price"] * 1.15
 
 my_df = pd.DataFrame({"price": [10, 20]})
-add_tax(my_df) 
+add_tax(my_df)
 # my_df is now changed forever. This makes debugging a nightmare.
 
 ```
@@ -99,7 +99,7 @@ Use this when the DataFrame is small to medium-sized. It ensures the original da
 ```python
 def calculate_tax(df: pd.DataFrame) -> pd.DataFrame:
     """Returns a new dataframe with tax applied, leaving the original intact."""
-    new_df = df.copy() 
+    new_df = df.copy()
     new_df["total"] = new_df["price"] * 1.15
     return new_df
 
@@ -244,4 +244,3 @@ def process_workflow(url: str, storage: Storage) -> None:
 Notice that `fetch_payload` doesn't know about `FileStorage`. It just does one thing and returns a value. This makes it a "Lego brick" you can reuse anywhere.
 
 **Would you like me to generate a `pytest` file for this "After" example so you can see how professionals write test suites?**
-

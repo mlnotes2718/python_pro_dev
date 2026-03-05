@@ -39,7 +39,7 @@ warn_return_any = true
 warn_unused_configs = true
 show_error_codes = true
 # Essential for DS: ignore libs without stubs without crashing the whole check
-ignore_missing_imports = true 
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"

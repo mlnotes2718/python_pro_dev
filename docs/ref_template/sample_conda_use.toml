@@ -41,7 +41,7 @@ strict = true
 show_error_codes = true
 warn_unused_configs = true
 # Essential for Conda: ignore libs without stubs so mypy doesn't crash on niche ML libs
-ignore_missing_imports = true 
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"

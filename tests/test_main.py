@@ -23,18 +23,22 @@ def test_show_data(capsys: pytest.CaptureFixture) -> None:
     assert "a" in captured.out
 
 
-def test_main_success() -> None:
-    with patch("main.load_dotenv"):  # prevent dotenv from overwriting
-        with patch.dict("os.environ", {"PASSWORD": "secret"}):
-            result = main()
-            assert result == 0
+def test_main_success(monkeypatch) -> None:
+    # 1. Mock the environment variable
+    monkeypatch.setenv("PASSWORD", "secret")
+
+    # 2. Mock load_dotenv (using patch as a decorator is often cleaner)
+    with patch("main.load_dotenv"):
+        result = main()
+        assert result == 0
 
 
 def test_main_no_password() -> None:
-    with patch("main.load_dotenv"):
-        with patch.dict("os.environ", {}, clear=True):
-            with patch("main.logger"):  # suppresses intentional error log
-                with pytest.raises(
-                    OSError, match="PASSWORD environment variable not set"
-                ):
-                    main()
+    # Everything goes into one block, separated by commas
+    with (
+        patch("main.load_dotenv"),
+        patch.dict("os.environ", {}, clear=True),
+        patch("main.logger"),
+        pytest.raises(OSError, match="PASSWORD environment variable not set"),
+    ):
+        main()

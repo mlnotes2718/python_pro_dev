@@ -161,30 +161,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run linter
         run: npm run lint
-      
+
       - name: Run unit tests
         run: npm test -- --coverage
-      
+
       - name: Upload coverage reports
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-      
+
       - name: Run integration tests
         run: npm run test:integration
-      
+
       - name: Build application
         run: npm run build
 
@@ -192,15 +192,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Run security audit
         run: npm audit --audit-level=moderate
-      
+
       - name: Run Snyk security scan
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -211,7 +211,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -234,21 +234,21 @@ jobs:
     environment: staging
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Build Docker image
         run: docker build -t app:${{ github.sha }} .
-      
+
       - name: Push to container registry
         run: |
           docker tag app:${{ github.sha }} registry.example.com/app:staging
           docker push registry.example.com/app:staging
-      
+
       - name: Deploy to staging
         run: kubectl apply -f k8s/staging/
-      
+
       - name: Run smoke tests
         run: npm run test:smoke -- --env=staging
-      
+
       - name: Notify team
         uses: 8398a7/action-slack@v3
         with:
@@ -265,18 +265,18 @@ jobs:
         uses: trstringer/manual-approval@v1
         with:
           approvers: platform-team,senior-engineers
-      
+
       - uses: actions/checkout@v3
-      
+
       - name: Deploy to production
         run: kubectl apply -f k8s/production/
-      
+
       - name: Run production smoke tests
         run: npm run test:smoke -- --env=production
-      
+
       - name: Monitor deployment
         run: ./scripts/monitor-deployment.sh
-      
+
       - name: Rollback on failure
         if: failure()
         run: kubectl rollout undo deployment/app

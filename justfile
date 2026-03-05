@@ -49,7 +49,7 @@ typecheck:
         uv run mypy src; \
     else \
         mypy src; \
-    fi    
+    fi
 
 # Run Security Scan on src directory only
 sec:

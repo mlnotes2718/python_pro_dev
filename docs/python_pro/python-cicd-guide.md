@@ -163,21 +163,21 @@ repos:
       - id: ruff
         args: [--fix]
       - id: ruff-format
-  
+
   # Mypy for type checking
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.7.0
     hooks:
       - id: mypy
         additional_dependencies: [pydantic]
-  
+
   # Bandit for security scanning
   - repo: https://github.com/PyCQA/bandit
     rev: 1.7.5
     hooks:
       - id: bandit
         args: ["-c", "pyproject.toml"]
-        
+
   # Basic pre-commit hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
@@ -209,34 +209,34 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
-      
+
       - name: Lint with ruff
         run: |
           ruff check .
           ruff format --check .
-      
+
       - name: Type check with mypy
         run: mypy src/
-      
+
       - name: Security scan with bandit
         run: bandit -r src/
-      
+
       - name: Test with pytest
         run: pytest --cov=src --cov-report=xml --cov-report=term
-      
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
@@ -247,10 +247,10 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Deploy to production
         run: |
           echo "Deploy steps here"
@@ -329,7 +329,7 @@ class User(BaseModel):
     name: str = Field(min_length=1)
     email: str
     age: int = Field(ge=0, le=150)
-    
+
 def create_user(name: str, email: str, age: int) -> User:
     """Create and validate a new user."""
     return User(name=name, email=email, age=age)
@@ -607,14 +607,14 @@ jobs:
     steps:
       - name: Run tests
         run: pytest
-  
+
   deploy-staging:
     # Only deploy to staging from develop branch
     if: github.ref == 'refs/heads/develop'
     steps:
       - name: Deploy to staging
         run: ./deploy-staging.sh
-  
+
   deploy-production:
     # Only deploy to production from main branch
     if: github.ref == 'refs/heads/main'
@@ -738,7 +738,7 @@ class Settings(BaseSettings):
     api_key: str
     debug: bool = False
     max_connections: int = 100
-    
+
     model_config = ConfigDict(env_file='.env')
 
 # Loads from environment variables or .env file
@@ -864,8 +864,8 @@ Pydantic is considered one of the most important libraries in modern Python deve
 
 ---
 
-**Version:** 1.0  
-**Last Updated:** February 2026  
+**Version:** 1.0
+**Last Updated:** February 2026
 **Maintained by:** Your Team
 
 ---
@@ -873,4 +873,3 @@ Pydantic is considered one of the most important libraries in modern Python deve
 ## License
 
 This guide is provided as-is for educational purposes.
-

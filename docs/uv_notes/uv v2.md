@@ -48,9 +48,9 @@ Share these files to recreate the environment in a new project:
 2. `uv.lock`
 3. `.python-version`
 
-- The file `.python-version` can be recreated using `uv python pin <version>` if you know which Python version the project requires. 
+- The file `.python-version` can be recreated using `uv python pin <version>` if you know which Python version the project requires.
 - If we lost the file `uv.lock` we can recreate the lock file using the command `uv lock` from `pyproject.toml`. The resolved versions might differ as we get the latest compatible versions based on the constraints in the `pyproject.toml` file.
-- This file `pyproject.toml` cannot be lost.  
+- This file `pyproject.toml` cannot be lost.
 
 
 ### Setting Different Platform Requirement

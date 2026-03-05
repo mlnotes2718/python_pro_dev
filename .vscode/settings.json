@@ -1,5 +1,5 @@
 {
-    // Python Integration: Ruff as the primary tool
+    //Python Integration: Ruff as the primary tool
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": false, // Prevents code jumping while typing

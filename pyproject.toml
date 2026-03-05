@@ -67,7 +67,7 @@ strict = true # This turns on almost everything, including disallow_untyped_defs
 show_error_codes = true
 warn_unused_configs = true
 # Essential for Conda: ignore libs without stubs so mypy doesn't crash on niche ML libs
-ignore_missing_imports = true 
+ignore_missing_imports = true
 
 # Don't enforce strict typing in tests
 [[tool.mypy.overrides]]

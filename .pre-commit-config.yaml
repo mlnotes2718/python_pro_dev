@@ -14,6 +14,7 @@ repos:
       - id: check-yaml               # validates YAML syntax
         stages: [pre-commit]         # run on commit
       - id: check-json               # validates JSON syntax
+        exclude: ^\.vscode/          # This tells the hook to skip the VS Code folder
         stages: [pre-commit]         # run on commit
       - id: end-of-file-fixer        # ensures files end with newline
         stages: [pre-commit]         # run on commit
