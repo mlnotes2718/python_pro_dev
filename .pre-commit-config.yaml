@@ -52,13 +52,25 @@ repos:
         args: ["--redact", "--report-format=csv", "--report-path=./log/gitleaks_report.csv"]
         stages: [pre-commit, pre-push]
 
-  # mypy and pytest as local - need your venv
+
+  # pip-audit
+  - repo: local
+    hooks:
+      - id: pip-audit
+        name: pip-audit
+        entry: uv run pip-audit --local
+        language: system
+        pass_filenames: false
+        files: ^(pyproject\.toml|uv\.lock)$
+        stages: [pre-push] # ← only on push
+
+  # Following hooks run on local system, not from a remote repo
+  # mupy, pytest config
   - repo: local
     hooks:
       - id: mypy
         name: mypy
-        #entry: uv run mypy src
-        entry: just typecheck
+        entry: just typecheck # old entry: uv run mypy src
         language: system
         types: [python]
         pass_filenames: false
@@ -66,9 +78,7 @@ repos:
 
       - id: pytest
         name: pytest
-        #entry: uv run pytest --cov --cov-report=term-missing
-        entry: just test
+        entry: just test # oldentry: uv run pytest --cov --cov-report=term-missing
         language: system
         pass_filenames: false
-        always_run: true
         stages: [pre-push]    # ← only on push

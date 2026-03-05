@@ -60,9 +60,26 @@ sec:
         bandit -r . -ll -c pyproject.toml; \
     fi
 
+# Run pip-audit on the current environment
+audit:
+    @echo "🔒  ({{env_type}}) Running audit..."
+    @if [ "{{env_type}}" = "uv" ]; then \
+        uv run pip-audit --local; \
+    else \
+        pip list --format=freeze | pip-audit -r /dev/stdin; \
+        conda-audit; \
+    fi
+
+precommit:
+    @echo "🔍  ({{env_type}}) Running pre-commit..."
+    @if [ "{{env_type}}" = "uv" ]; then \
+        uv run pre-commit run --all-files; \
+    else \
+        pre-commit run --all-files; \
+    fi
 
 # Run all checks
-run: lint typecheck sec test clean
+run: lint typecheck audit sec test clean
 
 # Remove build, cache, and coverage artifacts
 clean:

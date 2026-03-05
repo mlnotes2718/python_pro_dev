@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pandas as pd
 import pytest
 
-from main import add_func, main, multiply, show_data
+from src.main import add_func, main, multiply, show_data
 
 
 def test_add_func() -> None:
