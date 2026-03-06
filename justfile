@@ -18,15 +18,7 @@ setup:
         pre-commit install --hook-type pre-commit --hook-type pre-push; \
     fi
 
-# # Run Type Checking
-# typecheck:
-#     @echo "🛡️  ({{env_type}}) Running Mypy..."
-#     @if [ "{{env_type}}" = "uv" ]; then uv run mypy .; else mypy .; fi
-
-# # Run Linting
-# lint:
-#     @echo "🔍 ({{env_type}}) Running Ruff..."
-#     @if [ "{{env_type}}" = "uv" ]; then uv run ruff check . --fix; else ruff check . --fix; fi
+## Start of development commands
 
 # Run Tests
 test *args:
@@ -37,18 +29,18 @@ test *args:
 lint:
     @echo "🔍 ({{env_type}}) Running Ruff on src/..."
     @if [ "{{env_type}}" = "uv" ]; then \
-        uv run ruff check src --fix; \
+        uv run ruff check . --fix; \
     else \
-        ruff check src --fix; \
+        ruff check . --fix; \
     fi
 
 # Run Type Checking on src directory only
 typecheck:
     @echo "🛡️  ({{env_type}}) Running Mypy on src/..."
     @if [ "{{env_type}}" = "uv" ]; then \
-        uv run mypy src; \
+        uv run mypy .; \
     else \
-        mypy src; \
+        mypy .; \
     fi
 
 # Run Security Scan on src directory only
@@ -66,8 +58,17 @@ audit:
     @if [ "{{env_type}}" = "uv" ]; then \
         uv run pip-audit --local; \
     else \
-        pip list --format=freeze | pip-audit -r /dev/stdin; \
-        conda-audit; \
+        pip-audit --local; \
+    fi
+
+# Check environment health
+health:
+    @echo "🩺 Checking environment health..."
+    @if [ "{{env_type}}" = "uv" ]; then \
+        uv pip check; \
+        uv sync; \
+    else \
+        conda doctor; \
     fi
 
 precommit:
@@ -79,7 +80,7 @@ precommit:
     fi
 
 # Run all checks
-run: lint typecheck audit sec test clean
+run: lint typecheck health audit sec test clean
 
 # Remove build, cache, and coverage artifacts
 clean:
