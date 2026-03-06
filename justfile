@@ -74,8 +74,10 @@ health:
 precommit:
     @echo "🔍  ({{env_type}}) Running pre-commit..."
     @if [ "{{env_type}}" = "uv" ]; then \
+        uv run pre-commit autoupdate; \
         uv run pre-commit run --all-files; \
     else \
+        pre-commit autoupdate; \
         pre-commit run --all-files; \
     fi
 
