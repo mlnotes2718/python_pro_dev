@@ -90,6 +90,6 @@ clean:
     rm -rf htmlcov
     rm -rf .mypy_cache
     rm -rf .ruff_cache
-    rm -ef .hypothesis
+    rm -rf .hypothesis
     find . -type d -name "__pycache__" -exec rm -rf {} +
     @echo "✨ Cleaned!"
