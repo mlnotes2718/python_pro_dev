@@ -1,6 +1,7 @@
 name: dev-pypro
 channels:
   - defaults
+  - conda-forge
 dependencies:
   - pytest-cov
   - python-dotenv
