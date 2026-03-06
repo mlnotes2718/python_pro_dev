@@ -1,7 +1,9 @@
 from unittest.mock import patch
 
+import hypothesis.strategies as st
 import pandas as pd
 import pytest
+from hypothesis import assume, given
 
 from main import add_func, main, multiply, show_data
 
@@ -42,3 +44,58 @@ def test_main_no_password() -> None:
         pytest.raises(OSError, match="PASSWORD environment variable not set"),
     ):
         main()
+
+
+# ── new hypothesis tests (added alongside) ──────────────────────────────────
+
+
+@given(
+    st.floats(allow_nan=False, allow_infinity=False),
+    st.floats(allow_nan=False, allow_infinity=False),
+)
+def test_add_func_commutative(a, b):
+    """a + b should always equal b + a"""
+    assert add_func(a, b) == add_func(b, a)
+
+
+@given(
+    st.floats(allow_nan=False, allow_infinity=False),
+    st.floats(allow_nan=False, allow_infinity=False),
+)
+def test_add_func_zero_identity(a, b):
+    """adding 0 should not change the value"""
+    assume(b == 0)
+    assert add_func(a, b) == a
+
+
+@given(
+    st.floats(allow_nan=False, allow_infinity=False),
+    st.floats(allow_nan=False, allow_infinity=False),
+)
+def test_multiply_commutative(a, b):
+    """a * b should always equal b * a"""
+    assert multiply(a, b) == multiply(b, a)
+
+
+@given(
+    st.floats(allow_nan=False, allow_infinity=False),
+    st.floats(allow_nan=False, allow_infinity=False),
+)
+def test_multiply_by_zero(a, b):
+    """multiplying by 0 should always return 0"""
+    assume(b == 0)
+    assert multiply(a, b) == 0
+
+
+@given(st.lists(st.integers(), min_size=1))
+def test_show_data_any_column(values):
+    """show_data should always print column name regardless of content"""
+    import io
+    from contextlib import redirect_stdout
+
+    df = pd.DataFrame({"my_col": values})
+    f = io.StringIO()
+    with redirect_stdout(f):
+        show_data(df)
+    output = f.getvalue()
+    assert "my_col" in output

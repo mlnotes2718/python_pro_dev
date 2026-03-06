@@ -1,201 +1,136 @@
-In 2026, Python type hinting has moved from an "extra" to a professional requirement. Below is a comprehensive guide to mastering type hints and Mypy using modern tools like **uv** and **Conda**.
+# mypy — Static Type Checker
+
+## What It Does
+
+mypy analyses Python type annotations at build time without running the code. It catches an entire class of bugs before they reach production: wrong argument types, missing return values, `None` dereferences, and API misuse.
+
+This project runs mypy in **strict mode**, which enables all optional checks and enforces annotations on every function.
 
 ---
 
-## Part 1: The Type Hinting Guide (Modern Syntax)
+## Running mypy
 
-Since Python 3.10+, typing has become much cleaner. You no longer need to import `List` or `Dict` for basic collections.
-
-### 1. Basic & Collection Types
-
-```python
-# Simple Types
-age: int = 25
-price: float = 19.99
-is_active: bool = True
-
-# Collections (Modern 3.10+ syntax)
-names: list[str] = ["Alice", "Bob"]
-user_scores: dict[str, int] = {"Alice": 95}
-coordinates: tuple[int, int] = (10, 20)
-
+```bash
+just typecheck                # Run via just
+uv run mypy .                 # Run directly
+uv run mypy src/main.py       # Check a single file
 ```
 
-### 2. Unions and "Optional" Values
-
-The pipe operator (`|`) has replaced the bulky `Union` and `Optional` imports.
-
-```python
-# "Optional" (either a string or None)
-middle_name: str | None = None
-
-# "Union" (can be an int OR a float)
-def calculate_tax(amount: int | float) -> float:
-    return amount * 0.15
-
-```
-
-### 3. Structural Types (TypedDict & Literal)
-
-Use these when you need more precision than just `dict` or `str`.
-
-```python
-from typing import TypedDict, Literal
-
-class User(TypedDict):
-    username: str
-    role: Literal["admin", "user", "guest"]
-
-new_user: User = {"username": "alice", "role": "admin"}
-
-def greet(name: str, count: int = 1) -> list[str]:
-    return [f"Hello {name}"] * count
-```
-
-### 4. Functions
-Always annotate your arguments and the return type (->).
-
-```python
-def greet(name: str, count: int = 1) -> list[str]:
-    return [f"Hello {name}"] * count
-```
-
-
-### 5. Type Hinting Cheat Sheet (Modern Python)
-
-Python 3.10+ uses cleaner syntax for collections and multiple types.
-
-* **Collections:** `list[int]`, `dict[str, float]`, `set[str]`
-* **Unions (Either/Or):** `int | float` (replaces `Union[int, float]`)
-* **Optional (Value or None):** `str | None` (replaces `Optional[str]`)
-* **Specific Strings/Numbers:** `Literal["admin", "user"]`
-* **DataFrames:** `pd.DataFrame` (requires `pandas-stubs`)
+mypy runs automatically on `git push` via the pre-push hook.
 
 ---
 
-## Part 2: Mypy Setup & Common Stubs
-
-### 1. Installation
-
-| Tool | Installation Command | Run Command |
-| --- | --- | --- |
-| **uv** | `uv add --dev mypy` | `uv run mypy .` |
-| **Conda** | `conda install -c conda-forge mypy` | `mypy your_script.py` |
-
-Run without installing (ad-hoc):
-```bash
-uvx mypy script.py
-```
-
-### 2. Commonly Used Stubs
-
-Many libraries don't ship with types. You must install "stubs" (packages ending in `-stubs` or starting with `types-`).
-
-**Data Science & General Stubs:**
-
-Mypy needs "stubs" to understand third-party libraries. If you get `Library stubs not installed`, use these commands:
-
-| Library | **uv** Install | **Conda** Install |
-| --- | --- | --- |
-| **Pandas** | `uv add --dev pandas-stubs` | `conda install -c conda-forge pandas-stubs` |
-| **Requests** | `uv add --dev types-requests` | `conda install -c conda-forge types-requests` |
-| **PyYAML** | `uv add --dev types-PyYAML` | `conda install -c conda-forge types-pyyaml` |
-| **Boto3** | `uv add --dev boto3-stubs` | `conda install -c conda-forge boto3-stubs` |
-
-**How to Install Stubs:**
-
-* **Using uv:**
-```bash
-uv add --dev pandas-stubs types-requests types-PyYAML
-
-```
-
-
-* **Using Conda:**
-```bash
-conda install -c conda-forge pandas-stubs types-requests types-pyyaml
-
-```
-
-
-
----
-
-## Part 3: Essential Mypy CLI Commands
-
-Running `mypy script.py` is just the start. Use these flags to gain more control:
-
-### 1. The "Golden" Flag: `--strict`
-
-This is the "pro mode." It enables nearly all of Mypy's check flags, forcing you to annotate every function and disallowing `Any`.
-
-```bash
-mypy --strict .
-
-```
-
-### 2. Automatic Stub Helper
-
-If you have many missing imports, let Mypy find the stubs for you:
-
-```bash
-mypy --install-types --non-interactive
-
-```
-
-### 3. Advanced CLI Commands & Flags
-
-* **`--strict`**: The "no-nonsense" mode. It turns on every strictness flag, requiring annotations for all functions and banning `Any`. Use this for new projects.
-* **`--ignore-missing-imports`**: Stops Mypy from complaining about libraries that don't have stubs.
-* **`--show-error-codes`**: Highly recommended. It shows the specific error name (e.g., `[attr-defined]`), making it easier to ignore specific lines using `# type: ignore[error-code]`.
-* **`--check-untyped-defs`**: Forces Mypy to look inside functions even if you haven't added a return type hint yet.
-* **`--pretty`**: Makes the output more readable with color-coding and clear markers.
-* **`--exclude`**: Skip specific folders (like migrations or tests).
-```bash
-mypy . --exclude "tests/"
-
-```
-
-
-
----
-
-## Part 4: The `pyproject.toml` Configuration
-
-Instead of typing long commands, save your preferences in your project root. Mypy will pick these up automatically.
+## Configuration (pyproject.toml)
 
 ```toml
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.11"
+exclude = ['^tests/']
 strict = true
-warn_return_any = true
-warn_unused_configs = true
 show_error_codes = true
+warn_unused_configs = true
 ignore_missing_imports = true
 
-# Overrides for specific parts of your project
 [[tool.mypy.overrides]]
 module = "tests.*"
-disallow_untyped_defs = false  # Relax rules for test files
-
+disallow_untyped_defs = false
+check_untyped_defs = false
 ```
 
-## Summary Comparison
+### What `strict = true` enables
 
-| Feature | Standard Python | With Mypy |
-| --- | --- | --- |
-| **Error Detection** | At runtime (when code runs) | Before execution (static) |
-| **Refactoring** | Risky (might break things) | Safe (Mypy flags every break) |
-| **Documentation** | Comments/Docstrings | Self-documenting code |
-| **Speed** | No impact | Faster development, slower CI check |
+| Flag | What it checks |
+|---|---|
+| `disallow_untyped_defs` | Every function must have type annotations |
+| `disallow_incomplete_defs` | No partially annotated functions |
+| `check_untyped_defs` | Type-check functions even without annotations |
+| `warn_return_any` | Warn when a function returns `Any` |
+| `warn_unused_ignores` | Catch stale `# type: ignore` comments |
+| `no_implicit_reexport` | Explicit re-exports only |
+| `strict_equality` | Catch always-true/false comparisons |
 
+### `ignore_missing_imports = true`
 
+Suppresses errors for third-party libraries that don't ship type stubs. This is important in conda environments where niche ML libraries often lack stubs. For libraries with stubs (like pandas), install the stub package instead:
 
-
-
-
-
-
-
+```toml
+[dependency-groups]
+dev = [
+    "pandas-stubs>=3.0.0.260204",
+]
+```
 
 ---
+
+## Writing Type-Safe Code
+
+### Basic annotations
+
+```python
+def add_func(x: int | float, y: int | float) -> int | float:
+    return x + y
+
+def main() -> int:
+    return 0
+```
+
+### With pandas
+
+```python
+import pandas as pd
+
+def show_data(df: pd.DataFrame) -> None:
+    print(df)
+```
+
+### Optional values
+
+```python
+import os
+
+passwd: str | None = os.getenv("PASSWORD")
+if passwd is None:
+    raise OSError("PASSWORD not set")
+# After the check, mypy knows passwd is str
+```
+
+---
+
+## Common Errors and Fixes
+
+### `error: Function is missing a return type annotation`
+
+Add `-> ReturnType` to the function signature. Use `-> None` for functions that don't return a value.
+
+### `error: Argument 1 has incompatible type "str | None"; expected "str"`
+
+You need to handle the `None` case before passing the value:
+
+```python
+value = os.getenv("KEY")
+if value is None:
+    raise ValueError("KEY not set")
+use(value)  # mypy now knows value is str
+```
+
+### `error: Cannot find implementation or library stub for module named "somelib"`
+
+Either:
+- Install stubs: `uv add --dev somelib-stubs`
+- Or add to `pyproject.toml`: `ignore_missing_imports = true` (already set globally)
+- Or suppress per-import: `import somelib  # type: ignore[import]`
+
+---
+
+## Test Override
+
+Tests are excluded from strict checking because test helper functions and fixtures don't always benefit from full annotation:
+
+```toml
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+check_untyped_defs = false
+```
+
+This keeps test code practical while keeping production code fully type-safe.

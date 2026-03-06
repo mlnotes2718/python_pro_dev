@@ -1,21 +1,22 @@
 name: dev-pypro
 channels:
   - defaults
-  - conda-forge
 dependencies:
-  - python-dotenv
-  - ruff
-  - pytest
-  - mypy
-  - types-pyyaml
+  - pytest-cov
   - python=3.11
+  - ruff
+  - mypy
   - pandas
-  - types-requests
-  - pandas-stubs
-  - requests
   - pyyaml
   - just
+  - requests
+  - types-pyyaml
   - pre-commit
-  - pytest-cov
+  - types-requests
+  - pytest
+  - python-dotenv
+  - pandas-stubs
   - pip-audit
+  - bandit
+  - hypothesis
 prefix: /Users/dsai/miniconda3/envs/dev-pypro

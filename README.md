@@ -1,246 +1,150 @@
-# Python Professional Development
+# Python Pro Dev
 
-This project tries to migrate Python project into a more professional style.
-
-Please refer to `./docs` for all the references and notes
-
-This repo is setup with uv and compatible with conda environment.
-
-- For a start, we introduce linting and formatting. We use `ruff` as the defacto tool.
-- Next we include `mypy` for static analysis on type hinting.
-- Next we include `pytest` for testing
-
-In the programming side:
-- Look deeper into `try-except`
-- Do not over-engineer or under-engineer class and function.
-- Do not over-use and under-use lambda and list comprehension
-- Use functional principal when writing function
-
-
-## LLM Suggestion
-Here is an assessment of your plan with some professional-grade refinements to help you level up.
+A professional-grade Python project template demonstrating a complete development toolchain for production-quality code. Built with safety, correctness, and automation at every layer.
 
 ---
 
-## 1. Tooling & Workflow
+## Toolchain Overview
 
-You’ve picked the "modern stack." `ruff` is currently the industry favorite because it replaces Flake8, Black, and isort all at once with incredible speed.
+| Tool | Category | When It Runs |
+|---|---|---|
+| [uv](https://docs.astral.sh/uv/) / conda | Package & env management | Manual |
+| [just](https://just.systems/) | Task runner | Manual |
+| [Ruff](https://docs.astral.sh/ruff/) | Linter + formatter | Pre-commit |
+| [mypy](https://mypy.readthedocs.io/) | Static type checker | Pre-push |
+| [pytest](https://docs.pytest.org/) + [pytest-cov](https://pytest-cov.readthedocs.io/) | Testing + coverage | Pre-push |
+| [Hypothesis](https://hypothesis.readthedocs.io/) | Property-based testing | Pre-push (via pytest) |
+| [Bandit](https://bandit.readthedocs.io/) | Security linter | Pre-commit |
+| [pip-audit](https://pypi.org/project/pip-audit/) | Dependency vulnerability scan | Pre-push |
+| [pre-commit](https://pre-commit.com/) | Git hook orchestrator | On commit / push |
+| [Gitleaks](https://github.com/gitleaks/gitleaks) | Secret scanning | Pre-commit + pre-push |
 
-* **The Missing Link: Automation.** Don’t run these manually. Use **pre-commit hooks**. This ensures that code cannot even be committed to your local git history unless it passes your `ruff`, `mypy`, and `pytest` checks.
-* **Mypy Strategy:** Start with `--disallow-untyped-defs`. If you don't force yourself to type-hint function signatures, you’ll likely skip them when things get busy.
-
----
-
-## 2. Refining the Programming Logic
-
-Your focus on "balance" (not over/under engineering) is the hardest part of senior-level development. Here is how to calibrate that balance:
-
-### Deep Dive: `try-except`
-
-Professional code avoids "Pokemon Exception Handling" (Catching 'em all).
-
-* **The Rule:** Only catch exceptions you actually know how to handle. If you can't fix it or log it meaningfully, let it crash.
-* **Context Managers:** Learn to use the `with` statement and `contextlib`. It’s often cleaner than a `try-finally` block for resource management.
-
-### The "Goldilocks" Principle (Classes vs. Functions)
-
-* **Under-engineering:** Putting everything in one giant script with global variables.
-* **Over-engineering:** Creating a class for something that could be a simple function. If a class has only two methods and one of them is `__init__`, it probably shouldn't be a class.
-* **The Professional Way:** Use **Data Classes** (`from dataclasses import dataclass`) for objects that just store data, and use classes only when you need to manage complex internal state.
-
-### Functional Principles
-
-This is the "secret sauce" of bug-free code.
-
-* **Immutability:** Try to avoid changing variables in place. Instead of modifying a list, return a new one.
-* **Pure Functions:** Aim for functions where the same input **always** produces the same output and has no "side effects" (like printing to console or changing a global variable).
-
-
-<details>
-
-<summary>
-
-#### Handling Numpy and Pandas
-Handling this professionally requires a balance between **functional purity** (copying everything) and **performance** (memory efficiency).
+> **Upgrade path:** When moving to conda environments or containers, replace `pip-audit` with [Grype](https://github.com/anchore/grype) for deeper filesystem-level vulnerability scanning.
 
 ---
 
-</summary>
+## Quick Start
 
-##### 1. The "Hidden Mutation" Problem
+### With uv (preferred)
 
-When you pass a DataFrame into a function, Python passes it **by assignment**. If the function modifies that DataFrame, it changes for the rest of your program.
+```bash
+# Install uv if you don't have it
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-###### The Amateur Way (In-place Mutation)
+# Clone and set up the project
+git clone <your-repo>
+cd python-pro-dev
+just setup
+```
 
-```python
-import pandas as pd
+### With conda
 
-def add_tax(df: pd.DataFrame) -> None:
-    # This modifies the original data outside the function!
-    df["total"] = df["price"] * 1.15
+```bash
+# just setup auto-detects uv or conda
+just setup
+```
 
-my_df = pd.DataFrame({"price": [10, 20]})
-add_tax(my_df)
-# my_df is now changed forever. This makes debugging a nightmare.
+`just setup` installs all dependencies and registers pre-commit hooks in one step.
 
+---
+
+## Project Structure
+
+```
+python-pro-dev/
+├── src/
+│   └── main.py          # Application source
+├── tests/
+│   └── test_main.py     # Pytest + Hypothesis tests
+├── log/                 # App and audit logs (gitignored)
+├── docs/                # Detailed tool guides
+│   ├── uv.md
+│   ├── just.md
+│   ├── ruff.md
+│   ├── mypy.md
+│   ├── pytest.md
+│   ├── hypothesis.md
+│   ├── bandit.md
+│   ├── pip-audit.md
+│   ├── pre-commit.md
+│   └── gitleaks.md
+├── justfile             # Task runner commands
+├── pyproject.toml       # All tool configuration
+├── .pre-commit-config.yaml
+└── .env                 # Local secrets (gitignored)
 ```
 
 ---
 
-##### 2. The Professional Way: Explicit Copying
+## Daily Workflow
 
-To stick to functional principles, your function should return a **new** object.
-
-###### Option A: The `.copy()` Method
-
-Use this when the DataFrame is small to medium-sized. It ensures the original data remains "read-only."
-
-```python
-def calculate_tax(df: pd.DataFrame) -> pd.DataFrame:
-    """Returns a new dataframe with tax applied, leaving the original intact."""
-    new_df = df.copy()
-    new_df["total"] = new_df["price"] * 1.15
-    return new_df
-
+```bash
+just lint          # Fix style and lint issues (Ruff)
+just typecheck     # Check types (mypy)
+just test          # Run tests with coverage (pytest)
+just sec           # Security scan (Bandit)
+just audit         # Dependency CVE scan (pip-audit)
+just health        # Check environment consistency
+just precommit     # Run all pre-commit hooks manually
+just run           # Run everything: lint → typecheck → health → audit → sec → test → clean
+just clean         # Remove all cache and build artifacts
 ```
 
-###### Option B: Method Chaining (The "Pandas Way")
+Git automation handles the rest:
 
-Professional Pandas code often uses `.assign()`. This automatically returns a new copy of the DataFrame with the changes applied, which is much more "Functional."
+- **On `git commit`** → Ruff, Bandit, Gitleaks, and standard file checks run automatically.
+- **On `git push`** → mypy, pytest, pip-audit, and Gitleaks run automatically.
 
-```python
-def get_tax_data(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(total=lambda x: x["price"] * 1.15)
+---
 
+## Configuration
+
+All tool configuration lives in `pyproject.toml`. No scattered config files.
+
+```toml
+[tool.ruff]        # Linting and formatting rules
+[tool.mypy]        # Type checking strictness
+[tool.pytest.ini_options]  # Test discovery and coverage
+[tool.bandit]      # Security scan exclusions
+[tool.coverage.report]     # Coverage reporting
 ```
 
----
-
-##### 3. Handling Large Data (Performance vs. Purity)
-
-If your NumPy array is 10GB, you cannot simply `.copy()` it every time. You’ll run out of RAM (OOM Error).
-
-**The Professional Compromise:**
-
-1. **Strict Naming:** If a function *must* mutate data for performance, name it clearly: `mutate_array_in_place(arr)`.
-2. **The "View" vs "Copy" check:** Use `np.may_share_memory(a, b)` to verify if two variables are pointing to the same data.
-3. **Local Scope:** Keep mutations hidden inside a function, but return a final result that is "frozen."
+See the `docs/` folder for a detailed guide on each tool's configuration and usage.
 
 ---
 
-##### 4. Summary Table: Managing State
+## Environment Strategy
 
-| Scenario | Tool/Method | Why? |
-| --- | --- | --- |
-| **Small Data** | `.copy()` | Maximizes safety and predictability. |
-| **Adding Columns** | `.assign(...)` | Clean, functional, and chainable. |
-| **Large Arrays** | `inplace=True` | Saves memory, but requires heavy documentation. |
-| **Checking Links** | `df1 is df2` | Quickly check if two labels point to one object. |
+This project uses **uv by default** and falls back to **conda** when uv is not available. The `justfile` detects the environment automatically:
 
-</details>
----
-
-## 3. Comparison of Python Styles
-
-| Feature | Amateur/Scripting | Professional/Production |
-| --- | --- | --- |
-| **Error Handling** | `except Exception: pass` | Specific exceptions + Logging |
-| **Types** | Dynamic (guessed) | Explicit (Type Hints) |
-| **Testing** | Manual "print" checks | `pytest` + CI/CD pipelines |
-| **Configuration** | Hardcoded strings | Environment variables (`.env`) |
-| **Environment** | Global Python install | Virtual environments (`uv` or `poetry`) |
-
----
-
-## A Suggestion for your "Next Step"
-
-To bridge the gap between "writing functions" and "professional architecture," I recommend looking into **Dependency Injection**. It sounds intimidating, but it's the primary way professional developers make their code testable with `pytest`.
-
-**Would you like me to show you a "Before vs. After" example of a piece of code transformed from a basic script into this professional structure?**
-
-Let’s take a common task—fetching data from an API and saving it— and transform it from "scripting" style to "professional" style.
-
-### The "Before" (Amateur/Scripting)
-
-This code is hard to test, has no type safety, and uses "Pokemon" exception handling.
-
-```python
-import requests
-
-def get_data(url):
-    try:
-        r = requests.get(url)
-        return r.json()
-    except:
-        print("Error happened")
-
-def save(data):
-    with open("data.txt", "w") as f:
-        f.write(str(data))
-
-# Execution
-data = get_data("https://api.example.com/items")
-save(data)
-
+```just
+env_type := `[ -n "$CONDA_PREFIX" ] && echo "conda" || echo "uv"`
 ```
 
----
+Every `just` command runs the correct tool transparently — you never need to think about which environment manager is active.
 
-### The "After" (Professional/Production)
+**Use conda when:**
+- Working with packages that require compiled C/CUDA extensions (e.g. PyTorch, NumPy with MKL)
+- Managing non-Python dependencies in the same environment
 
-Notice the use of **Type Hints**, **Specific Exceptions**, **Dependency Injection**, and **Functional Principles**.
-
-```python
-import logging
-from typing import Dict, Any, Protocol
-import requests
-
-# 1. Define an Interface (Protocol) for flexibility
-class Storage(Protocol):
-    def save(self, data: Dict[str, Any]) -> None: ...
-
-# 2. Functional & Specific Logic
-class FileStorage:
-    def __init__(self, filename: str):
-        self.filename = filename
-
-    def save(self, data: Dict[str, Any]) -> None:
-        try:
-            with open(self.filename, "w") as f:
-                f.write(str(data))
-        except IOError as e:
-            logging.error(f"Failed to write to disk: {e}")
-            raise
-
-# 3. Pure Logic & Dependency Injection
-def fetch_payload(url: str) -> Dict[str, Any]:
-    """Pure function for fetching data with specific error handling."""
-    response = requests.get(url, timeout=10)
-    response.raise_for_status()  # Catch 4xx/5xx errors specifically
-    return response.json()
-
-def process_workflow(url: str, storage: Storage) -> None:
-    """Orchestrator: Easy to test by passing a 'Mock' storage."""
-    try:
-        data = fetch_payload(url)
-        storage.save(data)
-    except requests.RequestException as e:
-        logging.error(f"Network error: {e}")
-
-```
+**Upgrade to Grype when:**
+- Running containerised workloads (Docker, OCI images)
+- Using conda environments where pip-audit has incomplete visibility
+- You need OS-level package scanning, not just Python package scanning
 
 ---
 
-### Why this is "Professional":
+## Detailed Docs
 
-1. **Mypy Friendly:** Every function has clear inputs and outputs defined (e.g., `Dict[str, Any]`).
-2. **Pytest Friendly:** In `process_workflow`, you can pass a "fake" storage object to test the logic without actually writing to a hard drive.
-3. **Ruff Friendly:** This structure avoids global variables and nested logic that linters hate.
-4. **Error Handling:** It distinguishes between a *network* error and a *disk* error rather than just saying "Error happened."
+Each tool has its own guide in the `docs/` folder:
 
-### The Functional Principle at Play
-
-Notice that `fetch_payload` doesn't know about `FileStorage`. It just does one thing and returns a value. This makes it a "Lego brick" you can reuse anywhere.
-
-**Would you like me to generate a `pytest` file for this "After" example so you can see how professionals write test suites?**
+- [`docs/uv.md`](docs/uv.md) — Package and environment management
+- [`docs/just.md`](docs/just.md) — Task runner commands
+- [`docs/ruff.md`](docs/ruff.md) — Linting and formatting
+- [`docs/mypy.md`](docs/mypy.md) — Static type checking
+- [`docs/pytest.md`](docs/pytest.md) — Testing and coverage
+- [`docs/hypothesis.md`](docs/hypothesis.md) — Property-based testing
+- [`docs/bandit.md`](docs/bandit.md) — Security linting
+- [`docs/pip-audit.md`](docs/pip-audit.md) — Dependency CVE scanning
+- [`docs/pre-commit.md`](docs/pre-commit.md) — Git hook automation
+- [`docs/gitleaks.md`](docs/gitleaks.md) — Secret scanning

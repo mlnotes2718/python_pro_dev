@@ -1,7 +1,7 @@
 project_name := "python_pro_dev"
 
 # Returns 'uv' if the command is installed, otherwise 'conda'
-env_type := `command -v uv >/dev/null && echo uv || echo conda`
+env_type := `[ -n "$CONDA_PREFIX" ] && echo "conda" || echo "uv"`
 
 # Default: List commands
 default:
