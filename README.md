@@ -155,7 +155,7 @@ There are too many tools and may cause tools fatigue. Will adopt tools in phase.
 
 ```text
 Phase 1 (now)      → pre-commit + gitleaks + just
-Phase 2            → pip-audit or trivy
+Phase 2            → trivy
 Phase 3            → ruff + mypy + bandit
 Phase 4            → pytest + coverage
 Phase 5            → nbdime + nbqa
