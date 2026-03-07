@@ -1,5 +1,6 @@
 name: dev-pypro
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - pip-audit
@@ -21,3 +22,6 @@ dependencies:
   - hypothesis
   - virtualenv
   - nbdime
+  - ipywidgets
+  - matplotlib
+  - ipykernel
