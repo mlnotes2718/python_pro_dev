@@ -111,8 +111,46 @@ Once configured, this is your standard workflow to maintain clean Git history wh
 ---
 
 
-TLDR:
+## TLDR:
 
 - Basically, for accurately do notebook diff to capture code change, we need to remove output. This will be the standard process.
 - For cases where we need the output, run all in nb and convert to html. Repo remain clean, expected result shown in html
 - For cases where we need the output to check against code change, we can run the notebook first and perform code change.
+
+### Additional notes:
+
+Yes — nbdime tracks **everything** in the notebook, not just outputs:
+
+---
+
+**What nbdime tracks:**
+
+| Element | Tracked |
+|---|---|
+| Cell source code (text, markdown) | ✅ |
+| Markdown cells | ✅ |
+| Cell outputs (charts, tables, text) | ✅ |
+| Cell type changes (code → markdown) | ✅ |
+| Cell order changes | ✅ |
+| Execution count | ❌ ignored (noise) |
+| Notebook metadata | ❌ ignored (noise) |
+
+---
+
+**So stripping outputs is not required for nbdime** — it handles output diffs cleanly without the JSON noise of raw `git diff`.
+
+The reason to strip outputs is different:
+- **PII/secrets** in printed dataframes or query results
+- **Repo size** — charts and tables bloat git history
+- **Reproducibility** — stale outputs that don't match current code
+
+---
+
+**The honest decision:**
+
+```
+strip outputs    → if outputs contain sensitive data or repo size matters
+keep outputs     → if outputs are the deliverable (reports, analysis)
+```
+
+nbdime works well either way — stripping is a data governance decision, not a nbdime requirement.
