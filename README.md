@@ -148,3 +148,18 @@ Each tool has its own guide in the `docs/` folder:
 - [`docs/pip-audit.md`](docs/pip-audit.md) — Dependency CVE scanning
 - [`docs/pre-commit.md`](docs/pre-commit.md) — Git hook automation
 - [`docs/gitleaks.md`](docs/gitleaks.md) — Secret scanning
+
+
+## Practical Adoption
+There are too many tools and may cause tools fatigue. Will adopt tools in phase. The plans are as follows:
+
+```text
+Phase 1 (now)      → pre-commit + gitleaks + just
+Phase 2            → pip-audit or trivy
+Phase 3            → ruff + mypy + bandit
+Phase 4            → pytest + coverage
+Phase 5            → nbdime + nbqa
+Phase 6            → hypothesis + nbmake (notebook CI)
+```
+
+Will follow plans above and ruff and bandit can be checked remotely using precommit
