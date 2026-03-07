@@ -1,23 +1,23 @@
 name: dev-pypro
 channels:
   - defaults
-  - conda-forge
 dependencies:
+  - pip-audit
   - pytest-cov
-  - python-dotenv
+  - python=3.11
+  - conda-lock
+  - pyyaml
   - requests
+  - mypy
   - types-pyyaml
   - pytest
   - just
-  - python=3.11
-  - pyyaml
-  - mypy=1.17.1
-  - pandas
-  - pip-audit
-  - pre-commit
-  - ruff=0.15.1
+  - python-dotenv
   - types-requests
+  - pre-commit
+  - ruff
   - pandas-stubs
-  - bandit
+  - pandas
   - hypothesis
-  - conda-lock
+  - virtualenv
+  - nbdime
