@@ -62,7 +62,7 @@ audit:
         pip-audit --local; \
     fi
     @echo "({{env_type}}) Running trivy..."
-    trivy fs .; \
+    trivy fs . --output log/trivy-report.txt
 
 
 # Check environment health

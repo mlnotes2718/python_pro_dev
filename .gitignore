@@ -273,4 +273,4 @@ $RECYCLE.BIN/
 *.lnk
 
 gitleaks_report.csv
-table
+trivy-report.txt
