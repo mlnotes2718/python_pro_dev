@@ -1,7 +1,7 @@
 project_name := "python_pro_dev"
 
 # Returns 'uv' if the command is installed, otherwise 'conda'
-env_type := `[ -n "$CONDA_PREFIX" ] && echo "conda" || echo "uv"`
+env_type := `[ -n "${CONDA_PREFIX:-}" ] && echo "conda" || echo "uv"`
 
 # Default: List commands
 default:
@@ -54,19 +54,20 @@ sec:
 
 # Run pip-audit and trivy on the current environment
 audit:
-    @echo "🔒  ({{env_type}}) Running audit..."
+    @echo "🔒  ({{env_type}}) Running audit with pip-audit and trivy..."
+    @echo "({{env_type}}) Running pip-audit..."
     @if [ "{{env_type}}" = "uv" ]; then \
         uv run pip-audit --local; \
-        trivy fs .; \
     else \
         pip-audit --local; \
-        trivy fs .; \
     fi
+    @echo "({{env_type}}) Running trivy..."
+    trivy fs .; \
 
 
 # Check environment health
 health:
-    @echo "🩺 Checking environment health..."
+    @echo "🩺 ({{env_type}}) Checking environment health..."
     @if [ "{{env_type}}" = "uv" ]; then \
         uv pip check; \
         uv sync; \
@@ -77,10 +78,8 @@ health:
 precommit:
     @echo "🔍  ({{env_type}}) Running pre-commit..."
     @if [ "{{env_type}}" = "uv" ]; then \
-        uv run pre-commit autoupdate; \
         uv run pre-commit run --all-files; \
     else \
-        pre-commit autoupdate; \
         pre-commit run --all-files; \
     fi
 

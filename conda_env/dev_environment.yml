@@ -11,6 +11,9 @@ dependencies:
   - python-dotenv
   - requests
   - pyyaml
+  - ipykernel
+  - ipywidgets
+  - matplotlib
   # Type stubs
   - pandas-stubs
   - types-requests
@@ -20,6 +23,7 @@ dependencies:
   - pytest-cov
   - hypothesis
   # Quality tools
+  # Trivy installed separately
   - ruff
   - mypy
   - bandit
@@ -29,8 +33,5 @@ dependencies:
   - just
   # Lock file management
   - conda-lock
-  # Notebook / exploration
-  - ipykernel
-  - ipywidgets
-  - matplotlib
+  # Notebook Dev Tools
   - nbdime
