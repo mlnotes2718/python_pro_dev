@@ -53,7 +53,7 @@ repos:
         stages: [pre-commit, pre-push]
 
 
-  # pip-audit
+  # pip-audit and trivy - security vulnerability scanners for Python dependencies
   - repo: local
     hooks:
       - id: pip-audit
