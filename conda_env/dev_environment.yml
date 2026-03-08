@@ -22,7 +22,7 @@ dependencies:
   # Quality tools
   - ruff
   - mypy
-  - bandit          # ← was missing
+  - bandit
   - pre-commit
   - pip-audit
   # Task runner
