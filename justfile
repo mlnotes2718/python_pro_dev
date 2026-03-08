@@ -52,7 +52,7 @@ sec:
         bandit -r . -ll -c pyproject.toml; \
     fi
 
-# Run pip-audit on the current environment
+# Run pip-audit and trivy on the current environment
 audit:
     @echo "🔒  ({{env_type}}) Running audit..."
     @if [ "{{env_type}}" = "uv" ]; then \
