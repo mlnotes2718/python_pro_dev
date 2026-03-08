@@ -1,27 +1,36 @@
+# dev_environment.yml — all of prod + tooling
 name: dev-pypro
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - pip-audit
-  - pytest-cov
   - python=3.11
-  - conda-lock
-  - pyyaml
-  - requests
-  - mypy
-  - types-pyyaml
-  - pytest
-  - just
-  - python-dotenv
-  - types-requests
-  - pre-commit
-  - ruff
-  - pandas-stubs
+  # Runtime (keep in sync with environment.yml)
   - pandas
+  - numpy
+  - python-dotenv
+  - requests
+  - pyyaml
+  # Type stubs
+  - pandas-stubs
+  - types-requests
+  - types-pyyaml
+  # Testing
+  - pytest
+  - pytest-cov
   - hypothesis
-  - virtualenv
-  - nbdime
+  # Quality tools
+  - ruff
+  - mypy
+  - bandit          # ← was missing
+  - pre-commit
+  - pip-audit
+  # Task runner
+  - just
+  # Lock file management
+  - conda-lock
+  # Notebook / exploration
+  - ipykernel
   - ipywidgets
   - matplotlib
-  - ipykernel
+  - nbdime

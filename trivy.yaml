@@ -1,0 +1,17 @@
+# trivy.yaml
+# Place in project root. Trivy auto-detects this file.
+
+scan:
+  scanners:
+    - vuln
+    - secret
+    - misconfig
+
+severity:
+  - HIGH
+  - CRITICAL
+
+vulnerability:
+  ignore-unfixed: true
+
+output: table  # options: table, json, sarif, cyclonedx

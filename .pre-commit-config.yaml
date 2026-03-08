@@ -64,6 +64,16 @@ repos:
         files: ^(pyproject\.toml|uv\.lock)$
         stages: [pre-push] # ← only on push
 
+  # Trivy - comprehensive security scanner for filesystems, configured via .trivyignore
+  - repo: local
+    hooks:
+      - id: trivy-scan
+        name: Trivy Security Scan
+        entry: trivy fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1
+        args: ["."]
+        language: system
+        pass_filenames: false
+
   # Following hooks run on local system, not from a remote repo
   # mupy, pytest config
   - repo: local

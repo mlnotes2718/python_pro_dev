@@ -61,6 +61,11 @@ audit:
         pip-audit --local; \
     fi
 
+# Run trivy
+trivy:
+    @echo "🔒  Running Trivy security scan..."
+    @trivy fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --ignore-unfixed .
+
 # Check environment health
 health:
     @echo "🩺 Checking environment health..."
@@ -82,7 +87,7 @@ precommit:
     fi
 
 # Run all checks
-run: lint typecheck health audit sec test clean
+run: lint typecheck health audit trivy sec test clean
 
 # Remove build, cache, and coverage artifacts
 clean:
