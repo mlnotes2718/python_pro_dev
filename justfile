@@ -57,14 +57,12 @@ audit:
     @echo "🔒  ({{env_type}}) Running audit..."
     @if [ "{{env_type}}" = "uv" ]; then \
         uv run pip-audit --local; \
+        uv run trivy fs .; \
     else \
         pip-audit --local; \
+        trivy fs .; \
     fi
 
-# Run trivy
-trivy:
-    @echo "🔒  Running Trivy security scan..."
-    @trivy fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --ignore-unfixed .
 
 # Check environment health
 health:
@@ -87,7 +85,7 @@ precommit:
     fi
 
 # Run all checks
-run: lint typecheck health audit trivy sec test clean
+run: lint typecheck health audit sec test clean
 
 # Remove build, cache, and coverage artifacts
 clean:
