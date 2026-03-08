@@ -57,7 +57,7 @@ audit:
     @echo "🔒  ({{env_type}}) Running audit..."
     @if [ "{{env_type}}" = "uv" ]; then \
         uv run pip-audit --local; \
-        uv run trivy fs .; \
+        trivy fs .; \
     else \
         pip-audit --local; \
         trivy fs .; \
