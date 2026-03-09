@@ -173,6 +173,14 @@ Will follow plans above and ruff and bandit can be checked remotely using precom
 - Colab                         Google
 - Code Spell Checker            Street Side Software
 
-# Independent Developer 
+# Independent Developer
 - vscode-pdf                    tomoki1207
+```
+
+## HomeBrew
+
+```text
+just
+trivy
+uv
 ```

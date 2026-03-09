@@ -4,18 +4,21 @@
 
 `just` is a command runner (similar to `make`, but without the footguns). It reads a `justfile` in the project root and exposes named recipes that can be run with `just <recipe>`. It handles multi-step tasks, environment detection, and conditional logic — keeping all dev workflows in one place.
 
+Github repo: https://github.com/casey/just
+
 ---
 
 ## Installation
 
 ```bash
-brew install just          # macOS
-cargo install just         # Any platform with Rust
-uv tool install rust-just
+brew install just           # macOS
+cargo install just          # Any platform with Rust
+uv tool install rust-just   # Need uv run instead of just
+
 # or via prebuilt binary: https://just.systems/
 ```
 
-### Manual Installation
+### Manual Installation Using Prebuilt Binary: https://just.systems/
 ```bash
 # create ~/bin
 mkdir -p ~/bin
@@ -40,9 +43,10 @@ The `justfile` detects whether `uv` or `conda` is available and routes every com
 
 ```just
 env_type := `command -v uv >/dev/null && echo uv || echo conda`
+```
+**OR**
 
-# or
-
+```just
 env_type := `[ -n "${CONDA_PREFIX:-}" ] && echo "conda" || echo "uv"`
 ```
 
