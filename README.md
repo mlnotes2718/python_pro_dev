@@ -155,7 +155,7 @@ There are too many tools and may cause tools fatigue. Will adopt tools in phase.
 
 ```text
 Phase 1 (now)      → pre-commit + gitleaks + just
-Phase 2            → trivy                                     -> VSCode ext available (recently exploited KIV)
+Phase 2            → pip-audit + trivy                         -> VSCode ext available (recently exploited KIV)
 Phase 3            → ruff + mypy + bandit                      -> ruff, mypy vscode ext available, ruff & bandit precommit remote available
 Phase 4            → pytest + coverage
 Phase 5            → nbdime + nbqa
@@ -167,6 +167,7 @@ Will follow plans above and ruff and bandit can be checked remotely using precom
 
 ## VSCode Extension
 
+### Installed Extension
 ```text
 - Python                        Microsoft
 - Jupyter                       Microsoft
@@ -176,6 +177,22 @@ Will follow plans above and ruff and bandit can be checked remotely using precom
 # Independent Developer
 - vscode-pdf                    tomoki1207
 ```
+
+### KIV
+```text
+dev containers
+container tools
+mypy
+ruff
+kubernetes
+github pull requests
+github repositories
+github actions
+github copilot chat
+gitlens
+YAML
+```
+
 
 ## HomeBrew
 

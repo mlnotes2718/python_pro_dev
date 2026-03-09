@@ -1,0 +1,24 @@
+nbdiff notebooks/into_ml_2.ipynb (HEAD) notebooks/into_ml_2.ipynb
+--- notebooks/into_ml_2.ipynb (HEAD)  (no timestamp)
++++ notebooks/into_ml_2.ipynb  2026-03-09 19:35:18.091667
+[34m[1m## modified /cells/30/source:[0m
+[36m@@ -10,7 +10,7 @@[m [mThe $(i)$ in this context refers to each line of record or each data set. Please[m
+ [m
+ In summary, our straight line in machine learning is written as follows:[m
+ [m
+[31m-$$f(x^{(i)}) =b +wx^{(i)}$$ [m
+[32m+[m[32m$$f(x^{(i)}) =b +wx^{(i)}$$[m
+ [m
+ [m
+ The main challenge is to find the straight line that fits best to the data trend. In Statistics, we can use a formula (**Normal Equation**) to estimate the best fit line and thus also estimate the best value for w and b. This method is not used in machine learning because, when the data get large, the computation becomes more difficult. [m
+[36m@@ -21,6 +21,6 @@[m [mOnce we have the best-fit line with its parameters (w) and (b). We can make pred[m
+ [m
+ For prediction of $y$ or $f(x)$, we can rewrite the formula as the following:[m
+ [m
+[31m-$$\hat y = b + wx$$[m
+[32m+[m[32m$$\hat{y} = b + wx$$[m
+ [m
+ where $\hat y$  refers to the prediction  and $y$ refers to a known outcome.[m
+[m
+
+[0m

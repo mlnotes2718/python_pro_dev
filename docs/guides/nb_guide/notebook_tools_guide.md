@@ -465,3 +465,15 @@ All tools installed as dev dependencies in `pyproject.toml`. Run via `uv run <to
 - For tools not on conda-forge (`ydata-profiling`, `pandera`), use `pip install` inside the activated conda env
 - Always activate the conda env before running tools: `conda activate myenv`
 - Conda envs should be locked via `conda env export > environment.yml` for reproducibility
+
+
+## TT Notes
+```bash
+nbdiff -M --ignore-details
+
+nbdiff -MAD
+```
+
+https://nbdime.readthedocs.io/en/latest/cli.html
+
+https://github.com/srstevenson/nb-clean
