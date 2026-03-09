@@ -163,3 +163,16 @@ Phase 6            → hypothesis + nbmake (notebook CI)
 ```
 
 Will follow plans above and ruff and bandit can be checked remotely using precommit, will add to local install when required. For ruff we can use ruff extension first. this way we can reduce install foot print.
+
+
+## VSCode Extension
+
+```text
+- Python                        Microsoft
+- Jupyter                       Microsoft
+- Colab                         Google
+- Code Spell Checker            Street Side Software
+
+# Independent Developer 
+- vscode-pdf                    tomoki1207
+```

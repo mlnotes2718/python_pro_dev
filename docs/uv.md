@@ -11,6 +11,7 @@ This project uses `uv` as the primary environment manager, falling back to conda
 ## Installation
 
 ```bash
+brew install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
