@@ -11,7 +11,25 @@
 ```bash
 brew install just          # macOS
 cargo install just         # Any platform with Rust
+uv tool install rust-just
 # or via prebuilt binary: https://just.systems/
+```
+
+### Manual Installation
+```bash
+# create ~/bin
+mkdir -p ~/bin
+
+# download and extract just to ~/bin/just
+curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to ~/bin
+
+# add `~/bin` to the paths that your shell searches for executables
+# this line should be added to your shells initialization file,
+# e.g. `~/.bashrc` or `~/.zshrc`
+export PATH="$PATH:$HOME/bin"
+
+# just should now be executable
+just --help
 ```
 
 ---
@@ -22,6 +40,10 @@ The `justfile` detects whether `uv` or `conda` is available and routes every com
 
 ```just
 env_type := `command -v uv >/dev/null && echo uv || echo conda`
+
+# or
+
+env_type := `[ -n "${CONDA_PREFIX:-}" ] && echo "conda" || echo "uv"`
 ```
 
 This means every `just` command works identically whether you're using `uv` or `conda`.
