@@ -155,8 +155,8 @@ There are too many tools and may cause tools fatigue. Will adopt tools in phase.
 
 ```text
 Phase 1 (now)      → pre-commit + gitleaks + just
-Phase 2            → trivy
-Phase 3            → ruff + mypy + bandit
+Phase 2            → trivy                                     -> VSCode ext available (recently exploited KIV)
+Phase 3            → ruff + mypy + bandit                      -> ruff, mypy vscode ext available, ruff & bandit precommit remote available
 Phase 4            → pytest + coverage
 Phase 5            → nbdime + nbqa
 Phase 6            → hypothesis + nbmake (notebook CI)
