@@ -1,4 +1,8 @@
+# .gitignore
+## Source : https://github.com/github/gitignore
+
 ## Python.gitignore
+## Source : https://github.com/github/gitignore/blob/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -218,6 +222,7 @@ __marimo__/
 
 
 ## macOS gitignore
+## Source : https://github.com/github/gitignore/blob/main/Global/macOS.gitignore
 # General
 .DS_Store
 __MACOSX/
@@ -247,6 +252,7 @@ Temporary Items
 
 
 ## Windows gitignore
+## Source : https://github.com/github/gitignore/blob/main/Global/Windows.gitignore
 # Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable
