@@ -169,13 +169,15 @@ Will follow plans above and ruff and bandit can be checked remotely using precom
 
 ### Installed Extension
 ```text
-- Python                        Microsoft
-- Jupyter                       Microsoft
-- Colab                         Google
-- Code Spell Checker            Street Side Software
+- Python                            Microsoft
+- Jupyter                           Microsoft
+- Colab                             Google
+- Code Spell Checker                Street Side Software
+- Github Pull Requests              Github (Create PR and merge in VSCode)
+- Github Repositories               Github (Browse and edit online repo via VSCode)
 
 # Independent Developer
-- vscode-pdf                    tomoki1207
+- vscode-pdf                        tomoki1207
 ```
 
 ### KIV
@@ -185,19 +187,26 @@ container tools
 mypy
 ruff
 kubernetes
-github pull requests
-github repositories
 github actions
 github copilot chat
 gitlens
 YAML
+
+# Security
+Trivy
+Clutch GitLeaks Secret Scanner (Using Gitleaks)
+GitGuardian
+
+Trunck Code Quality
+Snyk Security
+
 ```
 
 
 ## HomeBrew
 
 ```text
-just
+
 trivy
 uv
 ```
