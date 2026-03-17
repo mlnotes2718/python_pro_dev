@@ -169,12 +169,19 @@ Will follow plans above and ruff and bandit can be checked remotely using precom
 
 ### Installed Extension
 ```text
+
+# Python Extensions
 - Python                            Microsoft
 - Jupyter                           Microsoft
 - Colab                             Google
+
+# Utilities
 - Code Spell Checker                Street Side Software
 - Github Pull Requests              Github (Create PR and merge in VSCode)
 - Github Repositories               Github (Browse and edit online repo via VSCode)
+
+# Security
+Clutch GitLeaks Secret Scanner (Using Gitleaks)     Clutch Security
 
 # Independent Developer
 - vscode-pdf                        tomoki1207
@@ -194,7 +201,6 @@ YAML
 
 # Security
 Trivy
-Clutch GitLeaks Secret Scanner (Using Gitleaks)
 GitGuardian
 
 Trunck Code Quality
