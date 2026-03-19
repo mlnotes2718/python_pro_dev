@@ -179,10 +179,12 @@ Will follow plans above and ruff and bandit can be checked remotely using precom
 - Code Spell Checker                Street Side Software
 - Github Pull Requests              Github (Create PR and merge in VSCode)
 - Github Repositories               Github (Browse and edit online repo via VSCode)
+- Container Tools                   Microsoft (Support Docker)
+- Dev Containers                    Microsoft (Support Docker)
 
 # Security
-Clutch GitLeaks Secret Scanner (Using Gitleaks)     Clutch Security
-GitGuardian                                         GitGuardian
+- Clutch GitLeaks Secret Scanner (Using Gitleaks)     Clutch Security
+- GitGuardian                                         GitGuardian
 
 # Independent Developer
 - vscode-pdf                        tomoki1207
@@ -190,8 +192,6 @@ GitGuardian                                         GitGuardian
 
 ### KIV
 ```text
-dev containers
-container tools
 mypy
 ruff
 kubernetes
