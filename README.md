@@ -154,12 +154,15 @@ Each tool has its own guide in the `docs/` folder:
 There are too many tools and may cause tools fatigue. Will adopt tools in phase. The plans are as follows:
 
 ```text
-Phase 1 (now)      → pre-commit + gitleaks + just
-Phase 2            → pip-audit + trivy                         -> VSCode ext available (recently exploited KIV)
-Phase 3            → ruff + mypy + bandit                      -> ruff, mypy vscode ext available, ruff & bandit precommit remote available
-Phase 4            → pytest + coverage
-Phase 5            → nbdime + nbqa
-Phase 6            → hypothesis + nbmake (notebook CI)
+Phase 1                → VSCode extension (Python, Jupyter, Colab, Code Spell Checker)
+Phase 2                → VSCode extension (Github PR, Github Remote, Container Tools, Dev Container)
+Phase 3                → VSCode extensions on security (Gitleaks, GitGuardian)
+Phase 4 (now)          → pre-commit + gitleaks + just
+Phase 5                → pip-audit + trivy                         -> VSCode ext available (recently exploited KIV)
+Phase 6                → ruff + mypy + bandit                      -> ruff, mypy vscode ext available, ruff & bandit precommit remote available
+Phase 7            → nbdime + nbqa
+Phase 8            → pytest + coverage
+Phase 9            → hypothesis + nbmake (notebook CI)
 ```
 
 Will follow plans above and ruff and bandit can be checked remotely using precommit, will add to local install when required. For ruff we can use ruff extension first. this way we can reduce install foot print.
