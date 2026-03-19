@@ -182,6 +182,7 @@ Will follow plans above and ruff and bandit can be checked remotely using precom
 
 # Security
 Clutch GitLeaks Secret Scanner (Using Gitleaks)     Clutch Security
+GitGuardian                                         GitGuardian
 
 # Independent Developer
 - vscode-pdf                        tomoki1207
@@ -201,8 +202,7 @@ YAML
 
 # Security
 Trivy
-GitGuardian
-
+# Code Security
 Trunck Code Quality
 Snyk Security
 
