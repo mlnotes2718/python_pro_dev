@@ -195,16 +195,24 @@ Will follow plans above and ruff and bandit can be checked remotely using precom
 
 ### KIV
 ```text
+# experimental testing
+YAML
+markdown (MS)
+
+# linting and typecheck
 mypy
 ruff
+
+# Utilities
 kubernetes
 github actions
-github copilot chat
+github issues
 gitlens
-YAML
+docker (Docker)
 
 # Security
 Trivy
+
 # Code Security
 Trunck Code Quality
 Snyk Security
