@@ -223,7 +223,5 @@ Snyk Security
 ## HomeBrew
 
 ```text
-
-trivy
 uv
 ```
